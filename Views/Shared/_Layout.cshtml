@@ -6,23 +6,13 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <style>
-        .nav-right {
-            color: #443c3c;
-            border-left: black solid;
-            border-radius: 10vh;
-        }
-        .nav-right :hover {
-            transition-duration: 1s;
-            color: #443c3c;
-            border-left: black solid;
-            border-radius: 10vh;
-        }
-    </style>
+    <link href="@Url.Content("~/Content/main.css")" rel="stylesheet" type="text/css" />
+    @RenderSection("Styles", false)
+    
 </head>
 <body>
     <div class="navbar navbar-fixed-top">
-        <div class="container" style="border-left: black solid; background-color: #9fa7a4; border-radius: 10vh; ">
+        <div class="container mt-2" style="border-left: black solid; background-color: #9fa7a4; border-radius: 10vh; ">
             <div class="navbar-header">
                 @Html.ActionLink("Exchange", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "color: #443c3c;" })
             </div>
