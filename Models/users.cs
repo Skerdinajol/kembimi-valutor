@@ -7,6 +7,7 @@ namespace KembimValutor.Models
 {
     public class users
     {
+        public int UserId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Username { get; set; }
