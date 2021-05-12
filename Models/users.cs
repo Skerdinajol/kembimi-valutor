@@ -15,5 +15,6 @@ namespace KembimValutor.Models
         public DateTime Birthday { get; set; }
         public string Email { get; set; }
         public float Wallet { get; set; }
+        public char Type { get; set; }
     }
 }

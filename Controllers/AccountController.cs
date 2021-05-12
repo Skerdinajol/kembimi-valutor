@@ -17,21 +17,29 @@ namespace KembimValutor.Controllers
         [HttpPost]
         public ActionResult login(Models.users user)
         {
-            string conec = "Data Source=DESKTOP-N9AAJ82\\SKERDI;Initial Catalog=KEMBIM_VALUTOR;Integrated Security=True";
-            string qrstr = "select user_id from users where username = '" + user.Username + "' and password = '" + user.Password +"' "; 
-            using(SqlConnection con = new SqlConnection(conec))
+            SqlConnectionStringBuilder constr = new SqlConnectionStringBuilder("Data Source=DESKTOP-N9AAJ82\\SKERDI;Initial Catalog=KEMBIM_VALUTOR;Integrated Security=True");
+            string qrstr = "select user_id from users where username = '" + user.Username + "' and password = '" + user.Password +"'"; 
+            using(SqlConnection con = new SqlConnection(constr.ConnectionString))
             {
                 SqlCommand cmd = new SqlCommand(qrstr, con);
+                con.Open();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    if (int.Parse(reader[0].ToString()) > 0)
+                    reader.Read();
+                    if (reader.FieldCount > 0)
                     {
                         Session["user_id"] = int.Parse(reader[0].ToString());
-                        return View("~/index");
+                        reader.Close();
+                        return View("../Home/Index");
+                    }
+                    else 
+                    {
+                        //e ndryshoj m vone
+                        reader.Close();
+                        return View("../register");
                     }
                 }
             }
-            return View();
         }
         public ActionResult register()
         {

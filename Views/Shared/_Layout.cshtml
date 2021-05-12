@@ -18,8 +18,16 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-right navbar-nav">
-                    <li>@Html.ActionLink("Log In", "login", "Account", new { area = "" }, new { @class = "nav-right" })</li>
-                    <li>@Html.ActionLink("Register", "register", "Account", new { area = "" }, new { @class = "nav-right" })</li>
+                    @if (Session["user_id"] == null)
+                    {
+                        <li>@Html.ActionLink("Log In", "login", "Account", new { area = "" }, new { @class = "nav-right" })</li>
+                        <li>@Html.ActionLink("Register", "register", "Account", new { area = "" }, new { @class = "nav-right" })</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Log Out", "logout", "Account", new { area = "" }, new { @class = "nav-right" })</li>
+                        <li>@Html.ActionLink("User", "userdetails", "Account", new { area = "" }, new { @class = "nav-right" })</li>
+                    }
                 </ul>
             </div>
         </div>
