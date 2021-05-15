@@ -9,7 +9,11 @@ namespace KembimValutor.Controllers
 {
     public class AccountController : Controller
     {
-        // GET: Account
+        public ActionResult logout()
+        {
+            Session.Abandon();
+            return RedirectToAction("../Home/Index");
+        }
         public ActionResult login()
         {
             return View();
@@ -30,7 +34,7 @@ namespace KembimValutor.Controllers
                     {
                         Session["user_id"] = int.Parse(reader[0].ToString());
                         reader.Close();
-                        return View("../Home/Index");
+                        return RedirectToAction("../Home/Index");
                     }
                     else 
                     {
@@ -55,7 +59,14 @@ namespace KembimValutor.Controllers
             {
                 SqlCommand cmd = new SqlCommand(qrstr, con);
                 con.Open();
-                cmd.ExecuteNonQuery();
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Ex = ex;
+                }
                 con.Close();
                 return View("../Account/login");
             }
@@ -108,6 +119,7 @@ namespace KembimValutor.Controllers
                         
                         reader.Close();
                     }
+                    
                 }
                         return View("userdetails", user);
             }

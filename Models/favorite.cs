@@ -5,11 +5,9 @@ using System.Web;
 
 namespace KembimValutor.Models
 {
-    public class rates
+    public class favorite
     {
+        public int UserId { get; set; }
         public int RateId { get; set; }
-        public string Curr1 { get; set; }
-        public string Curr2 { get; set; }
-        public double Rate { get; set; }
     }
 }

@@ -125,6 +125,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\favorite.cs" />
     <Compile Include="Models\rates.cs" />
     <Compile Include="Models\users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -163,8 +164,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\login.cshtml" />
     <Content Include="Views\Account\register.cshtml" />
