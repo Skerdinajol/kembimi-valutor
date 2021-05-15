@@ -3,11 +3,23 @@
 }
 
 <div class="form-group search-bar-div">
-    <form action="/" method="post">
-        <input type="text" id="search" />
-        <br />
-        <input class="mt-2" type="button" value="Search" />
-    </form>
+    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h2>Search</h2>
+            <div>
+                <input type="text" name="name" value="" />
+            </div>
+            
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Log In" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
 </div>
 <hr class="currency-container" />
 <div class="currency-container">

@@ -26,7 +26,7 @@ namespace KembimValutor.Controllers
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     reader.Read();
-                    if (reader.FieldCount > 0)
+                    if (reader.HasRows)
                     {
                         Session["user_id"] = int.Parse(reader[0].ToString());
                         reader.Close();
@@ -36,7 +36,8 @@ namespace KembimValutor.Controllers
                     {
                         //e ndryshoj m vone
                         reader.Close();
-                        return View("../register");
+                        ViewBag.valMsg = "Your username or password is incorrect";
+                        return View();
                     }
                 }
             }
@@ -45,9 +46,72 @@ namespace KembimValutor.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public ActionResult register(Models.users user)
+        {
+            SqlConnectionStringBuilder constr = new SqlConnectionStringBuilder("Data Source=DESKTOP-N9AAJ82\\SKERDI;Initial Catalog=KEMBIM_VALUTOR;Integrated Security=True");
+            string qrstr = "insert into users (username, password, name, surname, email, type) values('"+user.Username+ "','" + user.Password + "','" + user.Name + "','" + user.Surname + "','" + user.Email + "','U')";
+            using (SqlConnection con = new SqlConnection(constr.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand(qrstr, con);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+                return View("../Account/login");
+            }
+            
+        }
         public ActionResult userdetails()
         {
-            return View();
+            if (Session["user_id"] != null)
+            {
+                Models.users user = new Models.users();
+                SqlConnectionStringBuilder constr = new SqlConnectionStringBuilder("Data Source=DESKTOP-N9AAJ82\\SKERDI;Initial Catalog=KEMBIM_VALUTOR;Integrated Security=True");
+                string qrstr = "select name,surname,username,birthday,email from users where user_id = '"+ Session["user_id"] +"'";
+                using (SqlConnection con = new SqlConnection(constr.ConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand(qrstr, con);
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        reader.Read();
+                        try
+                        {
+                            user.Name = (string)reader[0];
+                        }
+                        catch (Exception)
+                        { }
+                        try
+                        {
+                            user.Surname = (string)reader[1];
+                        }
+                        catch (Exception)
+                        { }
+                        try
+                        {
+                            user.Username = (string)reader[2];
+                        }
+                        catch (Exception)
+                        { }
+                        try
+                        {
+                            user.Birthday = (DateTime)reader[3];
+                        }
+                        catch (Exception){ }
+
+                        try
+                        {
+                            user.Email = (string)reader[4];
+                        }
+                        catch (Exception)
+                        { }
+                        
+                        reader.Close();
+                    }
+                }
+                        return View("userdetails", user);
+            }
+            return View("../Home/Index");
         }
     }
 }

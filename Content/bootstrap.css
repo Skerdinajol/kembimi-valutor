@@ -1,9 +1,9 @@
-/*!
+!
  * Bootstrap v3.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
-/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+ 
+! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css 
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -45,10 +45,7 @@ template {
 a {
   background-color: transparent;
 }
-a:active,
-a:hover {
-  outline: 0;
-}
+
 abbr[title] {
   border-bottom: none;
   text-decoration: underline;
@@ -191,7 +188,7 @@ td,
 th {
   padding: 0;
 }
-/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
+! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css 
 @media print {
   *,
   *:before,
@@ -6831,4 +6828,4 @@ button.close {
     display: none !important;
   }
 }
-/*# sourceMappingURL=bootstrap.css.map */
+# sourceMappingURL=bootstrap.css.map 

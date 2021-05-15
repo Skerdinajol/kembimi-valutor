@@ -4,13 +4,20 @@
     border-radius: 10vh;
 }
 
-    .nav-right :hover {
-        transition-duration: 1s;
-        color: #443c3c;
-        border-left: black solid;
-        border-radius: 10vh;
-    }
+.nav-right :hover {
+    transition-duration: 1s;
+    color: #443c3c;
+    border-left: black solid;
+    border-radius: 10vh;
+}
 
+.w50{
+    width: 50%;
+}
+
+.flex {
+    display: flex;
+}
 .mt-1 {
     margin-top: 1px;
 }
@@ -30,3 +37,7 @@
 }
 
 
+.favorites {
+    width: 100%;
+    text-align: center;
+}

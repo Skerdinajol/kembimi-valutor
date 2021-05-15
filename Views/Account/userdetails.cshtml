@@ -4,71 +4,51 @@
     ViewBag.Title = "userdetails";
 }
 
-<h2>userdetails</h2>
+<h2>Hello @Model.Name !</h2>
 
 <div>
     <h4>users</h4>
     <hr />
-    <div>
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Surname)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Surname)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Username)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Username)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Password)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Password)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Birthday)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Birthday)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Email)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Email)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Wallet)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Wallet)
-            </dd>
-
-        </dl>
+    <div class="flex">
         <div>
-            <h1>Favorites</h1>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Surname)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Surname)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Username)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Username)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Birthday)
+                </dt>
+                <dd>
+                    @if (Model.Birthday.Year > 1500)
+                    {
+                        @Html.DisplayFor(model => model.Birthday)
+                    }
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+            </dl>
+        </div>
+        <div class="favorites">
+            <h2 class="mt-1">Favorites</h2>
             <br />
             <div></div>
         </div>
