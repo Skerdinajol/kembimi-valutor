@@ -22,10 +22,12 @@ namespace KembimValutor.Controllers
         public ActionResult login(Models.users user)
         {
             SqlConnectionStringBuilder constr = new SqlConnectionStringBuilder("Data Source=DESKTOP-N9AAJ82\\SKERDI;Initial Catalog=KEMBIM_VALUTOR;Integrated Security=True");
-            string qrstr = "select user_id from users where username = '" + user.Username + "' and password = '" + user.Password +"'"; 
-            using(SqlConnection con = new SqlConnection(constr.ConnectionString))
+            string qrstr = "select user_id from users where username = '" + user.Username + "' and password = '" + user.Password +"'";
+            
+            using (SqlConnection con = new SqlConnection(constr.ConnectionString))
             {
                 SqlCommand cmd = new SqlCommand(qrstr, con);
+                
                 con.Open();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -33,7 +35,17 @@ namespace KembimValutor.Controllers
                     if (reader.HasRows)
                     {
                         Session["user_id"] = int.Parse(reader[0].ToString());
+                        
                         reader.Close();
+                        string qrstrwl = "insert into wallet(user_id) values('" + Session["user_id"] + "')";
+                        SqlCommand cmdw = new SqlCommand(qrstrwl, con);
+                        try
+                        {
+                        cmdw.ExecuteNonQuery();
+                        }
+                        catch (Exception)
+                        { }
+                       
                         return RedirectToAction("../Home/Index");
                     }
                     else 
@@ -55,6 +67,7 @@ namespace KembimValutor.Controllers
         {
             SqlConnectionStringBuilder constr = new SqlConnectionStringBuilder("Data Source=DESKTOP-N9AAJ82\\SKERDI;Initial Catalog=KEMBIM_VALUTOR;Integrated Security=True");
             string qrstr = "insert into users (username, password, name, surname, email, type) values('"+user.Username+ "','" + user.Password + "','" + user.Name + "','" + user.Surname + "','" + user.Email + "','U')";
+        
             using (SqlConnection con = new SqlConnection(constr.ConnectionString))
             {
                 SqlCommand cmd = new SqlCommand(qrstr, con);
@@ -119,11 +132,33 @@ namespace KembimValutor.Controllers
                         
                         reader.Close();
                     }
+
+
+                    //------------------------------------Favorites------------------------------------------------------------------------
                     
+                    List<Models.rates> ratesf = new List<Models.rates>();
+                    string qrFavStr = "SELECT RATES.RATE_ID AS rate_id,CURR1 AS curr1,CURR2 AS curr2,RATE AS rate FROM RATES INNER JOIN FAVORITES ON RATES.RATE_ID = FAVORITES.RATE_ID WHERE USER_ID = '" + Session["user_id"] + "'";
+                    SqlCommand cmdFav = new SqlCommand(qrFavStr, con);
+                    using (SqlDataReader readerf = cmdFav.ExecuteReader(System.Data.CommandBehavior.SingleResult))
+                    {
+                        while (readerf.Read())
+                        {
+                            Models.rates ratef = new Models.rates();
+
+                            ratef.RateId = (int)readerf["rate_id"];
+                            ratef.Curr1 = (string)readerf["curr1"];
+                            ratef.Curr2 = (string)readerf["curr2"];
+                            ratef.Rate = (double)readerf["rate"];
+                            ratesf.Add(ratef);
+                        }
+
+                    }
+                ViewBag.fav = ratesf;
                 }
                         return View("userdetails", user);
             }
-            return View("../Home/Index");
+            return RedirectToAction("../Home/Index");
         }
+
     }
 }

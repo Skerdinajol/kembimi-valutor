@@ -58,5 +58,33 @@ namespace KembimValutor.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public ActionResult search(string curr)
+        {
+            List<Models.rates> rates = new List<Models.rates>();
+
+            SqlConnectionStringBuilder constr = new SqlConnectionStringBuilder("Data Source=DESKTOP-N9AAJ82\\SKERDI;Initial Catalog=KEMBIM_VALUTOR;Integrated Security=True");
+            string qrstr = "select * from RATES where curr1 ='"+curr+"' or curr2 = '"+curr+"'";
+            using (SqlConnection con = new SqlConnection(constr.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand(qrstr, con);
+                con.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader(System.Data.CommandBehavior.SingleResult))
+                {
+                    while (reader.Read())
+                    {
+                        Models.rates rate = new Models.rates();
+
+                        rate.RateId = (int)reader["RATE_ID"];
+                        rate.Curr1 = (string)reader["CURR1"];
+                        rate.Curr2 = (string)reader["CURR2"];
+                        rate.Rate = (double)reader["RATE"];
+                        rates.Add(rate);
+                    }
+
+                }
+            }
+            return View("Index", rates);
+        }
     }
 }

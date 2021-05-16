@@ -7,10 +7,18 @@
 <h2>Hello @Model.Name !</h2>
 
 <div>
-    <h4>users</h4>
-    <hr />
-    <div class="flex">
+    <div class="flex spc_btw">
         <div>
+            <h4>users</h4>
+        </div>
+        <div style="align-self:center">
+            @Html.ActionLink("Wallet", "wallet", "Account", new { }, new { @class = "" })
+        </div>
+    </div>
+
+    <hr />
+    <div class="flex spc_btw">
+        <div style="width:30%; text-align-last:left; align-self:center">
             <dl class="dl-horizontal">
                 <dt>
                     @Html.DisplayNameFor(model => model.Name)
@@ -45,12 +53,39 @@
                 <dd>
                     @Html.DisplayFor(model => model.Email)
                 </dd>
+                <div>@Html.ActionLink("Edit Profile", "edit", "Account", new { }, new { @class = "" })</div>
             </dl>
         </div>
         <div class="favorites">
-            <h2 class="mt-1">Favorites</h2>
+            <h2 class="mt-1" style="text-align:center">Favorites</h2>
             <br />
-            <div></div>
+            <div class="currency-container">
+                @foreach (var rate in ViewBag.fav)
+                {
+                    <ul class="list-inline">
+                        <li>@rate.Curr1</li>
+                        <li>-</li>
+                        <li>@rate.Curr2</li>
+                        <li>@rate.Rate</li>
+
+                   @if (Session["user_id"] != null)
+                   {
+                            <li style="float:right">
+                                <div class="flex">
+                                    <div class="mr-3">
+                                        @Html.ActionLink("Exchange", "exchange", "Home", new { RateId = rate.RateId }, new { @class = "" })
+                                    </div>
+                                    <p style="visibility:hidden">.........</p>
+                                    <div class="mr-3">
+                                        @Html.ActionLink("Remove", "favorite", "Account", new { RateId = rate.RateId }, new { @class = "" })
+                                       </div>
+                                </div>
+                            </li>
+                    }
+                    </ul>
+                    <hr />
+                }
+            </div>
         </div>
     </div>
 </div>
@@ -58,7 +93,3 @@
 {
 
 }
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

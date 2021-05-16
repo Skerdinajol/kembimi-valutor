@@ -4,14 +4,12 @@
 @model List<KembimValutor.Models.rates>
 
 <div class="form-group search-bar-div">
-    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+    @using (Html.BeginForm("search", "Home", FormMethod.Get))
     {
-        @Html.AntiForgeryToken()
-
         <div class="form-horizontal">
             <h2>Search</h2>
             <div>
-                <input type="text" name="name" value="" />
+                @Html.TextBox("CURR")
             </div>
             
             <div class="form-group">
@@ -21,18 +19,30 @@
     }
 </div>
 <hr class="currency-container" />
+
 <div class="currency-container">
     @foreach (var rate in Model)
     {
         <ul class="list-inline">
-            @if (Session["user_id"] != null)
-            {
-                <li>@Html.ActionLink("Add to Favorites", "favorite", "Home", new { RateId = rate.RateId }, new { @class = "" })</li>
-            }
             <li>@rate.Curr1</li>
             <li>-</li>
             <li>@rate.Curr2</li>
-            <li style="float:right">@rate.Rate</li>
+            <li>@rate.Rate</li>
+            @if (Session["user_id"] != null)
+            {
+                
+        <li style="float:right">
+            <div class="flex">
+                <div class="mr-3">
+                    @Html.ActionLink("Exchange", "exchange", "Home", new { RateId = rate.RateId }, new { @class = "" })
+                </div>
+                <p style="visibility:hidden">.........</p>
+                <div class="mr-3">
+                    @Html.ActionLink("Add to Favorites", "favorite", "Home", new { RateId = rate.RateId }, new { @class = "" })
+                </div>
+            </div>
+        </li>
+            }
         </ul>
         <hr />
     }
