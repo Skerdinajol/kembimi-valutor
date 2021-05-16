@@ -3,6 +3,7 @@
 }
 @model List<KembimValutor.Models.rates>
 
+
 <div class="form-group search-bar-div">
     @using (Html.BeginForm("search", "Home", FormMethod.Get))
     {
@@ -11,16 +12,21 @@
             <div>
                 @Html.TextBox("CURR")
             </div>
-            
+
             <div class="form-group">
-                    <input type="submit" value="Search" class="btn" />
+                <input type="submit" value="Search" class="btn" />
             </div>
         </div>
     }
 </div>
 <hr class="currency-container" />
 
+@if (ViewBag.transcomplete)
+{
+    <div class="text-danger">Exchange Complete! <br /> See wallet for more information.</div>
+}
 <div class="currency-container">
+
     @foreach (var rate in Model)
     {
         <ul class="list-inline">
@@ -30,18 +36,18 @@
             <li>@rate.Rate</li>
             @if (Session["user_id"] != null)
             {
-                
-        <li style="float:right">
-            <div class="flex">
-                <div class="mr-3">
-                    @Html.ActionLink("Exchange", "exchange", "Home", new { RateId = rate.RateId }, new { @class = "" })
-                </div>
-                <p style="visibility:hidden">.........</p>
-                <div class="mr-3">
-                    @Html.ActionLink("Add to Favorites", "favorite", "Home", new { RateId = rate.RateId }, new { @class = "" })
-                </div>
-            </div>
-        </li>
+
+                <li style="float:right">
+                    <div class="flex">
+                        <div class="mr-3">
+                            @Html.ActionLink("Exchange", "exchange", "Home", new { RateId = rate.RateId }, new { @class = "" })
+                        </div>
+                        <p style="visibility:hidden">.........</p>
+                        <div class="mr-3">
+                            @Html.ActionLink("Add to Favorites", "favorite", "Home", new { RateId = rate.RateId }, new { @class = "" })
+                        </div>
+                    </div>
+                </li>
             }
         </ul>
         <hr />

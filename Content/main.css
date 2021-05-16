@@ -4,6 +4,9 @@
     border-radius: 10vh;
 }
 
+.hidden{
+    visibility:hidden;
+}
 .nav-right :hover {
     background-color: #443c3c;
     border-left: black solid;

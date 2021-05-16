@@ -1,0 +1,36 @@
+﻿@model KembimValutor.Models.rates
+
+
+@using (Html.BeginForm("exchanged","Home",FormMethod.Get))
+{
+    
+    <div class="form-horizontal">
+        <h4>favorite</h4>
+        <hr />
+        <div class="form-group">
+                @Html.HiddenFor(model => model.RateId, new { htmlAttributes = new { } })
+                @Html.HiddenFor(model => model.Curr1, new { htmlAttributes = new { } })
+                @Html.HiddenFor(model => model.Curr2, new { htmlAttributes = new { } })
+                @Html.HiddenFor(model => model.Rate, new { htmlAttributes = new { } })
+            @Html.TextBox("Value")
+        </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Exchange" class="btn btn-default" />
+            </div>
+        </div>
+}
+@if (ViewBag.noval)
+{
+<div class="text-danger">You don't have enough currency to make this transaction</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

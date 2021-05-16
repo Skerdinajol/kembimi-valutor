@@ -158,7 +158,85 @@ namespace KembimValutor.Controllers
                         return View("userdetails", user);
             }
             return RedirectToAction("../Home/Index");
-        }
+        }   
+        public ActionResult wallet(Models.Wallet wallet)
+        {
 
+            SqlConnectionStringBuilder constr = new SqlConnectionStringBuilder("Data Source=DESKTOP-N9AAJ82\\SKERDI;Initial Catalog=KEMBIM_VALUTOR;Integrated Security=True");
+            string qrstr = "select EUR,GBP,"+"\"ALL\""+",USD from wallet where user_id = '" + Session["user_id"] + "'";
+            using (SqlConnection con = new SqlConnection(constr.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand(qrstr, con);
+                con.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    reader.Read();
+                    try
+                    {
+                        wallet.Eur = (double)reader[0];
+                    }
+                    catch (Exception)
+                    { wallet.Eur = 0; }
+                    try
+                    {
+                        wallet.Gbp = (double)reader[1];
+                    }
+                    catch (Exception)
+                    { wallet.Gbp = 0; }
+                    try
+                    {
+                        wallet.All = (double)reader[2];
+                    }
+                    catch (Exception)
+                    { wallet.All = 0; }
+                    try
+                    {
+                        wallet.Usd = (double)reader[3];
+                    }
+                    catch (Exception) 
+                    { wallet.Usd = 0; }
+
+                    reader.Close();
+                }
+            }
+            ViewBag.edit = false;
+
+                return View(wallet);
+        }
+        public ActionResult add()
+        {
+            ViewBag.edit = true;
+            return View("wallet");
+        }
+        [HttpPost]
+        public ActionResult add(Models.Wallet wallet)
+        {
+            SqlConnectionStringBuilder constr = new SqlConnectionStringBuilder("Data Source=DESKTOP-N9AAJ82\\SKERDI;Initial Catalog=KEMBIM_VALUTOR;Integrated Security=True");
+            string qrstr = "select eur, gbp, \"all\", usd from wallet where user_id = "+Session["user_id"]+"";
+            using (SqlConnection con = new SqlConnection(constr.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand(qrstr, con);
+                con.Open();
+                using(SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    reader.Read();
+                    try
+                    {
+                    wallet.Eur += (double)reader[0];
+                    wallet.Gbp += (double)reader[1];
+                    wallet.All += (double)reader[2];
+                    wallet.Usd += (double)reader[3];
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            string qrstradd = "Update wallet set eur = " + wallet.Eur + ",gbp = " + wallet.Gbp + ",\"all\" = " + wallet.All + ",usd = " + wallet.Usd + "";
+                SqlCommand cmdadd = new SqlCommand(qrstradd, con);
+                cmdadd.ExecuteNonQuery();
+                con.Close();
+            }
+            return RedirectToAction("wallet");
+        }
     }
 }

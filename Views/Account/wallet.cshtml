@@ -1,0 +1,98 @@
+﻿@model KembimValutor.Models.Wallet
+
+@{
+    ViewBag.Title = "wallet";
+}
+
+<h2>wallet</h2>
+
+@if (ViewBag.edit)
+{
+    using (Html.BeginForm("add", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Wallet</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Eur, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Eur, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Eur, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Usd, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Usd, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Usd, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Gbp, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Gbp, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Gbp, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.All, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.All, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.All, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Add" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}
+else
+{
+    <div style="width:30%; text-align-last:left; align-self:center">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Eur)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Eur)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Usd)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Usd)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Gbp)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Gbp)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.All)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.All)
+            </dd>
+            <div>@Html.ActionLink("Add", "add", "Account", new { }, new { @class = "" })</div>
+        </dl>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

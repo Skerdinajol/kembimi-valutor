@@ -8,7 +8,9 @@ namespace KembimValutor.Models
     public class Wallet
     {
         public int UserId { get; set; }
-        public string Curr { get; set; }
-        public double CurrVal { get; set; }
+        public double Eur { get; set; }
+        public double Usd { get; set; }
+        public double Gbp { get; set; }
+        public double All { get; set; }
     }
 }
