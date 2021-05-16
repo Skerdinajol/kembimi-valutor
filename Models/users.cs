@@ -15,9 +15,8 @@ namespace KembimValutor.Models
         public string Username { get; set; }
         [Required]
         public string Password { get; set; }
-        public DateTime Birthday { get; set; }
+        public string Birthday { get; set; }
         public string Email { get; set; }
-        public float Wallet { get; set; }
         public char Type { get; set; }
     }
 }

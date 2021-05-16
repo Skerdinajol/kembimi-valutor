@@ -91,7 +91,7 @@ namespace KembimValutor.Controllers
             {
                 Models.users user = new Models.users();
                 SqlConnectionStringBuilder constr = new SqlConnectionStringBuilder("Data Source=DESKTOP-N9AAJ82\\SKERDI;Initial Catalog=KEMBIM_VALUTOR;Integrated Security=True");
-                string qrstr = "select name,surname,username,birthday,email from users where user_id = '"+ Session["user_id"] +"'";
+                string qrstr = "select name,surname,username,birthday,email,password from users where user_id = '"+ Session["user_id"] +"'";
                 using (SqlConnection con = new SqlConnection(constr.ConnectionString))
                 {
                     SqlCommand cmd = new SqlCommand(qrstr, con);
@@ -119,7 +119,7 @@ namespace KembimValutor.Controllers
                         { }
                         try
                         {
-                            user.Birthday = (DateTime)reader[3];
+                            user.Birthday = (string)reader[3];
                         }
                         catch (Exception){ }
 
@@ -237,6 +237,87 @@ namespace KembimValutor.Controllers
                 con.Close();
             }
             return RedirectToAction("wallet");
+        }
+
+        public ActionResult favorite(int RateId)
+        {
+            SqlConnectionStringBuilder constr = new SqlConnectionStringBuilder("Data Source=DESKTOP-N9AAJ82\\SKERDI;Initial Catalog=KEMBIM_VALUTOR;Integrated Security=True");
+            string qrstr = "delete from favorites where rate_id = "+RateId+" and user_id = " + Session["user_id"] + "";
+            using (SqlConnection con = new SqlConnection(constr.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand(qrstr, con);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            return RedirectToAction("userdetails");
+        }
+        public ActionResult edit()
+        {
+            Models.users user = new Models.users();
+            SqlConnectionStringBuilder constr = new SqlConnectionStringBuilder("Data Source=DESKTOP-N9AAJ82\\SKERDI;Initial Catalog=KEMBIM_VALUTOR;Integrated Security=True");
+            string qrstr = "select name,surname,username,birthday,email,password from users where user_id = '" + Session["user_id"] + "'";
+            using (SqlConnection con = new SqlConnection(constr.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand(qrstr, con);
+                con.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    reader.Read();
+                    try
+                    {
+                        user.Name = (string)reader[0];
+                    }
+                    catch (Exception)
+                    { }
+                    try
+                    {
+                        user.Surname = (string)reader[1];
+                    }
+                    catch (Exception)
+                    { }
+                    try
+                    {
+                        user.Username = (string)reader[2];
+                    }
+                    catch (Exception)
+                    { }
+                    try
+                    {
+                        user.Birthday = (string)reader[3];
+                    }
+                    catch (Exception) { }
+
+                    try
+                    {
+                        user.Email = (string)reader[4];
+                    }
+                    catch (Exception)
+                    { }
+                    try
+                    {
+                        user.Password = (string)reader[5];
+                    }
+                    catch (Exception)
+                    { }
+                    reader.Close();
+                }
+            }
+                return View(user);
+        }
+        [HttpPost]
+        public ActionResult edit(Models.users user)
+        {
+            SqlConnectionStringBuilder constr = new SqlConnectionStringBuilder("Data Source=DESKTOP-N9AAJ82\\SKERDI;Initial Catalog=KEMBIM_VALUTOR;Integrated Security=True");
+            string qrstr = "update users set name = '" + user.Name + "', surname = '" + user.Surname + "', username = '" + user.Username + "', password = '"+user.Password+"', birthday = "+user.Birthday+", email = '"+user.Email+"' where user_id = "+Session["user_id"]+"";
+            using (SqlConnection con = new SqlConnection(constr.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand(qrstr, con);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            return RedirectToAction("userdetails");
         }
     }
 }

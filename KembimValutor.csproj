@@ -171,6 +171,7 @@
     <Content Include="Views\Account\userdetails.cshtml" />
     <Content Include="Views\Account\wallet.cshtml" />
     <Content Include="Views\Shared\exchange.cshtml" />
+    <Content Include="Views\Account\edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

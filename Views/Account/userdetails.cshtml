@@ -42,10 +42,8 @@
                     @Html.DisplayNameFor(model => model.Birthday)
                 </dt>
                 <dd>
-                    @if (Model.Birthday.Year > 1500)
-                    {
                         @Html.DisplayFor(model => model.Birthday)
-                    }
+                    
                 </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.Email)
@@ -68,8 +66,8 @@
                         <li>@rate.Curr2</li>
                         <li>@rate.Rate</li>
 
-                   @if (Session["user_id"] != null)
-                   {
+                        @if (Session["user_id"] != null)
+                        {
                             <li style="float:right">
                                 <div class="flex">
                                     <div class="mr-3">
@@ -78,10 +76,10 @@
                                     <p style="visibility:hidden">.........</p>
                                     <div class="mr-3">
                                         @Html.ActionLink("Remove", "favorite", "Account", new { RateId = rate.RateId }, new { @class = "" })
-                                       </div>
+                                    </div>
                                 </div>
                             </li>
-                    }
+                        }
                     </ul>
                     <hr />
                 }
@@ -89,6 +87,7 @@
         </div>
     </div>
 </div>
+@Html.ActionLink("Go Back", "Index", "Home", new { }, new { @class = "" })
 @if (Model.Type == 'A')
 {
 
